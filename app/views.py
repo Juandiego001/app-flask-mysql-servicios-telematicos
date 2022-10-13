@@ -17,6 +17,5 @@ def contact():
 
 @app.route('/articles')
 def articles():
-    cur = mysql.connection.cursor()
     return render_template("articles.html")
     
