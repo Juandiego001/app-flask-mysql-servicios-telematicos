@@ -5,7 +5,8 @@ use app_flask_db;
 -- Table creation
 CREATE TABLE the_article(
     id INTEGER PRIMARY KEY,
-    body VARCHAR(300),
+    title VARCHAR(50),
+    body VARCHAR(600),
     author VARCHAR(50),
-    created_date DATETIME
+    created_date DATE
 );

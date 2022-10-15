@@ -1,22 +1,133 @@
 {% extends "index.html" %}
 {% block content %}
+
 <h2 class="my-5">Articles</h2>
-<div class="row text-center">
-    <div class="col-1"></div>
-    <div class="col-2 p-3 border">id</div>
-    <div class="col-2 p-3 border">title</div>
-    <div class="col-2 p-3 border">body</div>
-    <div class="col-2 p-3 border">author</div>
-    <div class="col-2 p-3 border">date</div>
-    <div class="col-1"></div>
+<div class="row text-center mx-5">
+    <div class="col p-3 border">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addArticle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">id</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">title</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">body</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">author</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">date</div>
 </div>
-<div class="row text-center">
-    <div class="col-1"></div>
-    <div class="col-2 p-3 border">id</div>
-    <div class="col-2 p-3 border">title</div>
-    <div class="col-2 p-3 border">body</div>
-    <div class="col-2 p-3 border">author</div>
-    <div class="col-2 p-3 border">date</div>
-    <div class="col-1"></div>
+
+{% for article in the_articles %}
+<div class="row text-center mx-5">
+    <div class="col p-3 border">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateArticle{{ article[0] }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+            </svg>
+        </button>
+        
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeArticle" onclick="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="col p-3 border d-flex justify-content-center align-items-center">{{ article[0] }}</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">{{ article[1] }}</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">{{ article[2] }}</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">{{ article[3] }}</div>
+    <div class="col p-3 border d-flex justify-content-center align-items-center">{{ article[4] }}</div>
 </div>
+
+<!-- Modal for updating articles -->
+<div class="modal fade" id="updateArticle{{ article[0] }}" tabindex="-1" aria-labelledby="updateArticle{{ article[0] }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update article</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+            <form class="w-75 mx-auto" method="POST" action="{{ url_for('articlesPut', id=article[0]) }}">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Id</label>
+                    <input id="id" name="id" class="form-control" type="text" placeholder="Default input" aria-label="default input example" value="{{ article[0] }}">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Title</label>
+                    <input id="title" name="title" class="form-control" type="text" placeholder="Default input" aria-label="default input example" value="{{ article[1] }}">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Body</label>
+                    <textarea id="body" name="body" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ article[2] }}</textarea>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Author </label>
+                    <input id="author" name="author" class="form-control" type="text" placeholder="Default input" aria-label="default input example" value="{{ article[3] }}">
+                </div>
+    
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Created at </label><br />
+                    <input id="createdat" name="createdat" type="date" id="datetime-local" value="{{ article[4] }}" >
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+  
+  <!-- Modal for adding articles -->
+  <div class="modal fade" id="addArticle" tabindex="-1" aria-labelledby="addArticle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add article</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+            <form class="w-75 mx-auto" method="POST" action="{{ url_for('articlesPost') }}">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Id</label>
+                    <input id="id" name="id" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Title</label>
+                    <input id="title" name="title" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Body</label>
+                    <textarea id="body" name="body" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Author </label>
+                    <input id="author" name="author" class="form-control" type="text" placeholder="Default input" aria-label="default input example">
+                </div>
+            
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Created at </label><br />
+                    <input id="createdat" name="createdat" type="date" id="datetime-local">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 {% endblock %}

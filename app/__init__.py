@@ -5,11 +5,11 @@ from flask_mysqldb import MySQL
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object("config")
 
+# Adding initial data
+# if there is not inserted on the database
 with app.app_context():
     mysql = MySQL(app)
 
-    # Adding initial data
-    # if there is not inserted on the database
     articles = [
         {
             'id': 1,
@@ -38,6 +38,22 @@ with app.app_context():
     
     cur = mysql.connection.cursor()
     results = cur.execute("SELECT * FROM the_article")
-    print(results)
+
+    if results == 0:
+        for article in articles:
+            query_insert = "INSERT INTO the_article VALUES(%s, '%s', '%s', '%s', STR_TO_DATE('%s'"
+
+            id = article['id']
+            title = article['title']
+            body = article['body']
+            author = article['author']
+            create_date = article['create_date']
+            
+
+            query_insert = query_insert % (id, title, body, author, create_date)
+            query_insert += ", '%d-%m-%Y'))"
+
+            results_querys = cur.execute(query_insert)
+            mysql.connection.commit()
 
 from app import views
