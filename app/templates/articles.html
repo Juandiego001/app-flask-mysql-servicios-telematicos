@@ -26,7 +26,7 @@
             </svg>
         </button>
         
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeArticle" onclick="">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteArticle{{ article[0] }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
             </svg>
@@ -83,6 +83,27 @@
       </div>
     </div>
   </div>
+
+<!-- Modal for deleting articles -->
+<div class="modal" id="deleteArticle{{ article[0] }}" tabindex="-1" aria-labelledby="deleteArticle{{ article[0] }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ventana de confirmación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Segur@ que deseas eliminar el artículo con id {{ article[0] }}?</p>
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{{ url_for('articlesDelete', id=article[0]) }}">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
 {% endfor %}
   
   <!-- Modal for adding articles -->

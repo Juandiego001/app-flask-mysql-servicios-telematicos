@@ -35,8 +35,7 @@ def articlesPost():
     created_at = form['createdat']
 
     cur = mysql.connection.cursor()
-    query = "INSERT INTO THE_ARTICLE VALUES(%s, '%s', '%s', '%s', STR_TO_DATE('%s'" % (id, title, body, author, created_at)
-    query += ", '%d-%m-%Y'))"
+    query = "INSERT INTO THE_ARTICLE VALUES(%s, '%s', '%s', '%s', '%s')" % (id, title, body, author, created_at)
     results = cur.execute(query)
     mysql.connection.commit()
 
@@ -54,13 +53,6 @@ def articlesPut(id):
     author = form['author']
     created_at = form['createdat']
 
-    print(id)
-    print(idNueva)
-    print(title)
-    print(body)
-    print(author)
-    print(created_at)
-
     cur = mysql.connection.cursor()
     query = "UPDATE THE_ARTICLE SET id = %s, title = '%s', body = '%s', author = '%s', created_date = '%s' WHERE id = %s" % (idNueva, title, body, author, created_at, id)
     results = cur.execute(query)
@@ -71,4 +63,9 @@ def articlesPut(id):
 # Route to delete artcles
 @app.route('/articles/<id>', methods=['GET', 'POST'])
 def articlesDelete(id):
+    cur = mysql.connection.cursor()
+    query = "DELETE FROM THE_ARTICLE WHERE id = %s" % (id)
+    results = cur.execute(query)
+    mysql.connection.commit()
+
     return redirect('/articles')
