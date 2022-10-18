@@ -18,7 +18,7 @@ def contact():
 @app.route('/articles', methods=['GET', 'POST'])
 def articlesGet():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM the_article")
+    cur.execute("SELECT * FROM `the_article`")
     the_articles = cur.fetchall()
 
     return render_template("articles.html", the_articles=the_articles)
@@ -35,7 +35,7 @@ def articlesPost():
     created_at = form['createdat']
 
     cur = mysql.connection.cursor()
-    query = "INSERT INTO THE_ARTICLE VALUES(%s, '%s', '%s', '%s', '%s')" % (id, title, body, author, created_at)
+    query = "INSERT INTO `the_article` VALUES(%s, '%s', '%s', '%s', '%s')" % (id, title, body, author, created_at)
     results = cur.execute(query)
     mysql.connection.commit()
 
@@ -54,7 +54,7 @@ def articlesPut(id):
     created_at = form['createdat']
 
     cur = mysql.connection.cursor()
-    query = "UPDATE THE_ARTICLE SET id = %s, title = '%s', body = '%s', author = '%s', created_date = '%s' WHERE id = %s" % (idNueva, title, body, author, created_at, id)
+    query = "UPDATE `the_article` SET id = %s, title = '%s', body = '%s', author = '%s', created_date = '%s' WHERE id = %s" % (idNueva, title, body, author, created_at, id)
     results = cur.execute(query)
     mysql.connection.commit()
 
@@ -64,7 +64,7 @@ def articlesPut(id):
 @app.route('/articles/<id>', methods=['GET', 'POST'])
 def articlesDelete(id):
     cur = mysql.connection.cursor()
-    query = "DELETE FROM THE_ARTICLE WHERE id = %s" % (id)
+    query = "DELETE FROM `the_article` WHERE id = %s" % (id)
     results = cur.execute(query)
     mysql.connection.commit()
 
